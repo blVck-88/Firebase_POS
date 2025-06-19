@@ -1,13 +1,16 @@
-// PASTE YOUR FIREBASE CONFIGURATION SNIPPET HERE:
-const firebaseConfig = {
-    apiKey: "AIzaSyCxoZlbj_6-UEJ6T6H2tnkKOp9ebX7YSrM",
-    authDomain: "khan-firepos.firebaseapp.com",
-    projectId: "khan-firepos",
-    storageBucket: "khan-firepos.firebasestorage.app",
-    messagingSenderId: "304752290702",
-    appId: "1:304752290702:web:44108274f60cfbe26fd2df",
-    measurementId: "G-SGMMWYK74F"
-  };
+// The firebaseConfig object is now loaded from the untracked 'firebase-config.js' file.
+// For this project to work, you must create a 'firebase-config.js' file in the root directory
+// and add your own Firebase configuration snippet.
+//
+// Example firebase-config.js:
+// const firebaseConfig = {
+//   apiKey: "YOUR_API_KEY",
+//   authDomain: "YOUR_AUTH_DOMAIN",
+//   projectId: "YOUR_PROJECT_ID",
+//   storageBucket: "YOUR_STORAGE_BUCKET",
+//   messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+//   appId: "YOUR_APP_ID"
+// };
 
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
