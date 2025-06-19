@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to get user's role
+    function getUserRole(userId) {
+      return get(/databases/$(database)/documents/users/$(userId)).data.role;
+    }
+
+    // Users collection
+    // - Users can read their own data (to get their role).
+    // - Authenticated users can create their own user document (on signup).
+    // - Admins can read any user document (for potential user management).
+    // - Only admins can update roles (not directly allowed for users).
+    match /users/{userId} {
+      allow read: if request.auth != null && 
+                    (request.auth.uid == userId || getUserRole(request.auth.uid) == 'admin');
+      allow create: if request.auth != null && request.auth.uid == userId;
+      // allow update: if request.auth != null && getUserRole(request.auth.uid) == 'admin'; // For admin role changes
+      // allow delete: if request.auth != null && getUserRole(request.auth.uid) == 'admin'; // For admin user deletion
+    }
+
+    // Products collection
+    // - Admins can create, read, update, delete products.
+    // - Cashiers can only read products.
+    match /products/{productId} {
+      allow read: if request.auth != null && (getUserRole(request.auth.uid) == 'admin' || getUserRole(request.auth.uid) == 'cashier');
+      allow create, update, delete: if request.auth != null && getUserRole(request.auth.uid) == 'admin';
+    }
+
+    // Sales collection
+    // - Admins can read all sales.
+    // - Cashiers can create new sales (their own).
+    // - Cashiers cannot read other sales or modify/delete any sales.
+    match /sales/{saleId} {
+      allow read: if request.auth != null && getUserRole(request.auth.uid) == 'admin';
+      allow create: if request.auth != null && 
+                       getUserRole(request.auth.uid) == 'cashier' &&
+                       request.resource.data.cashierId == request.auth.uid &&
+                       request.resource.data.total > 0; // Basic validation
+    }
+
+  }
+}

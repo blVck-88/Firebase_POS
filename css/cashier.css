@@ -1,0 +1,73 @@
+/* Cashier Page Specific Styles */
+
+
+#cashier-interface {
+    padding: 20px;
+}
+
+#cashier-interface h2, #cashier-interface h3 {
+    color: #333;
+}
+
+#product-scan-area, #cart-area {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 5px;
+}
+
+/* --- Responsive Design for Cashier Page --- */
+
+@media (max-width: 1024px) {
+    #cashier-main-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    #product-selection-area, #cart-area {
+        width: 100%;
+        max-height: none;
+        height: auto;
+    }
+
+    #cart-area {
+        border-left: none;
+        border-top: 2px solid #ddd;
+    }
+}
+
+@media (max-width: 768px) {
+    #product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    .product-card {
+        padding: 8px;
+    }
+
+    .product-card h4 {
+        font-size: 0.9em;
+    }
+
+    .product-card .price, .product-card .stock {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    #product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    #cart-summary div {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #cart-summary span {
+        text-align: left;
+    }
+}
+
